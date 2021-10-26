@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-require_relative '../command'
+require 'rubygems/command'
 require_relative '../server'
-require_relative '../deprecate'
+require 'rubygems/deprecate'
 
 class Gem::Commands::ServerCommand < Gem::Command
   extend Gem::Deprecate
