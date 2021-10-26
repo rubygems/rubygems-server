@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 require 'rubygems/command'
 require_relative '../server'
-require 'rubygems/deprecate'
 
 class Gem::Commands::ServerCommand < Gem::Command
-  extend Gem::Deprecate
-  rubygems_deprecate_command
 
   def initialize
     super 'server', 'Documentation and gem repository HTTP server',
