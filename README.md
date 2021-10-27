@@ -1,8 +1,16 @@
-# Rubygems::Server
+# Gem::Server
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rubygems/server`. To experiment with that code, run `bin/console` for an interactive prompt.
+Gem::Server and allows users to serve gems for consumption by `gem --remote-install`.
 
-TODO: Delete this and the text above, and describe your gem
+gem_server starts an HTTP server on the given port and serves the following:
+
+* "/" - Browsing of gem spec files for installed gems
+* "/specs.#{Gem.marshal_version}.gz" - specs name/version/platform index
+* "/latest_specs.#{Gem.marshal_version}.gz" - latest specs
+  name/version/platform index
+* "/quick/" - Individual gemspecs
+* "/gems" - Direct access to download the installable gems
+* "/rdoc?q=" - Search for installed rdoc documentation
 
 ## Installation
 
@@ -20,9 +28,12 @@ Or install it yourself as:
 
     $ gem install rubygems-server
 
-## Usage
+##  Usage
 
-TODO: Write usage instructions here
+```ruby
+gem_server = Gem::Server.new Gem.dir, 8089, false
+gem_server.run
+```
 
 ## Development
 
@@ -32,7 +43,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/hsbt/rubygems-server.
+Bug reports and pull requests are welcome on GitHub at https://github.com/rubygems/rubygems-server.
 
 ## License
 
