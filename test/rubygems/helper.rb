@@ -2,9 +2,34 @@
 
 require 'rubygems'
 
+# If bundler gemspec exists, add to stubs
+bundler_gemspec = File.expand_path("../../../bundler/bundler.gemspec", __FILE__)
+if File.exist?(bundler_gemspec)
+  Gem::Specification.dirs.unshift File.dirname(bundler_gemspec)
+  Gem::Specification.class_variable_set :@@stubs, nil
+  Gem::Specification.stubs
+  Gem::Specification.dirs.shift
+end
+
 begin
   gem 'test-unit', '~> 3.0'
 rescue Gem::LoadError
+end
+
+begin
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter "/test/"
+    add_filter "/bundler/"
+    add_filter "/lib/rubygems/resolver/molinillo"
+  end
+rescue LoadError
+end
+
+if File.exist?(bundler_gemspec)
+  require_relative '../../bundler/lib/bundler'
+else
+  require 'bundler'
 end
 
 require 'test/unit'
@@ -305,6 +330,7 @@ class Gem::TestCase < Test::Unit::TestCase
     ENV['XDG_CONFIG_HOME'] = nil
     ENV['XDG_DATA_HOME'] = nil
     ENV['SOURCE_DATE_EPOCH'] = nil
+    ENV['BUNDLER_VERSION'] = nil
 
     @current_dir = Dir.pwd
     @fetcher     = nil
@@ -387,6 +413,7 @@ class Gem::TestCase < Test::Unit::TestCase
     Gem.loaded_specs.clear
     Gem.instance_variable_set(:@activated_gem_paths, 0)
     Gem.clear_default_specs
+    Bundler.reset!
 
     Gem.configuration.verbose = true
     Gem.configuration.update_sources = true
