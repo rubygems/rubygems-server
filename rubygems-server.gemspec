@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Hiroshi SHIBATA"]
   spec.email = ["hsbt@ruby-lang.org"]
 
-  spec.summary = "TODO: Write a short summary, because RubyGems requires one."
-  spec.description = "TODO: Write a longer description or delete this line."
+  spec.summary = "Gem::Server and allows users to serve gems for consumption by `gem --remote-install`."
+  spec.description = spec.summary
   spec.homepage = "https://github.com/rubygems/rubygems-server"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
