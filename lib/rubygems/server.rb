@@ -3,8 +3,8 @@ require 'zlib'
 require 'erb'
 require 'uri'
 
-require_relative '../rubygems'
-require_relative 'rdoc'
+require 'rubygems'
+require 'rubygems/rdoc'
 
 ##
 # Gem::Server and allows users to serve gems for consumption by
