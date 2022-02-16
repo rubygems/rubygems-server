@@ -10,29 +10,14 @@ class Gem::Commands::ServerCommand < Gem::Command
           :port => 8808, :gemdir => [], :daemon => false
 
     OptionParser.accept :Port do |port|
-      if port =~ /\A\d+\z/
-        port = Integer port
-        raise OptionParser::InvalidArgument, "#{port}: not a port number" if
-          port > 65535
-
-        port
-      else
-        begin
-          Socket.getservbyname port
-        rescue SocketError
-          raise OptionParser::InvalidArgument, "#{port}: no such named service"
-        end
-      end
+      convert_port(port)
     end
 
-    add_option '-p', '--port=PORT', :Port,
-               'port to listen on' do |port, options|
-      options[:port] = port
+    add_option '-p', '--port=PORT', :Port, 'port to listen on' do |port, options|
+      options[:port] = convert_port(port)
     end
 
-    add_option '-d', '--dir=GEMDIR',
-               'directories from which to serve gems',
-               'multiple directories may be provided' do |gemdir, options|
+    add_option '-d', '--dir=GEMDIR', 'directories from which to serve gems', 'multiple directories may be provided' do |gemdir, options|
       options[:gemdir] << File.expand_path(gemdir)
     end
 
@@ -40,8 +25,7 @@ class Gem::Commands::ServerCommand < Gem::Command
       options[:daemon] = daemon
     end
 
-    add_option '-b', '--bind=HOST,HOST',
-               'addresses to bind', Array do |address, options|
+    add_option '-b', '--bind=HOST,HOST', 'addresses to bind', Array do |address, options|
       options[:addresses] ||= []
       options[:addresses].push(*address)
     end
@@ -82,5 +66,21 @@ You can set up a shortcut to gem server documentation using the URL:
   def execute
     options[:gemdir] = Gem.path if options[:gemdir].empty?
     Gem::Server.run options
+  end
+
+  private
+
+  def convert_port(port)
+    if port =~ /\A\d+\z/
+      port = Integer(port)
+      raise OptionParser::InvalidArgument, "#{port}: not a port number" if port > 65535
+      port
+    else
+      begin
+        Socket.getservbyname(port)
+      rescue SocketError
+        raise OptionParser::InvalidArgument, "#{port}: no such named service"
+      end
+    end
   end
 end

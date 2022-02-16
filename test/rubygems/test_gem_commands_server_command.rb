@@ -48,14 +48,13 @@ class TestGemCommandsServerCommand < Gem::TestCase
       @cmd.send :handle_options, %w[-p nonexistent]
     end
 
-    assert_equal 'invalid argument: -p nonexistent: no such named service',
-                 e.message
+    assert_equal 'invalid argument: nonexistent: no such named service', e.message
 
     e = assert_raise OptionParser::InvalidArgument do
       @cmd.send :handle_options, %w[-p 65536]
     end
 
-    assert_equal 'invalid argument: -p 65536: not a port number',
+    assert_equal 'invalid argument: 65536: not a port number',
                  e.message
   end
 end
