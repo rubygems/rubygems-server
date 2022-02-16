@@ -489,7 +489,7 @@ div.method-source-code pre { color: #ffdead; overflow: hidden; }
     latest_specs = Gem::Specification.latest_specs
 
     specs = latest_specs.sort.map do |spec|
-      platform = spec.original_platform || Gem::Platform::RUBY
+      platform = spec.platform || Gem::Platform::RUBY
       [spec.name, spec.version, platform]
     end
 
@@ -550,7 +550,7 @@ div.method-source-code pre { color: #ffdead; overflow: hidden; }
     specs = Gem::Specification.select do |spec|
       spec.version.prerelease?
     end.sort.map do |spec|
-      platform = spec.original_platform || Gem::Platform::RUBY
+      platform = spec.platform || Gem::Platform::RUBY
       [spec.name, spec.version, platform]
     end
 
@@ -849,7 +849,7 @@ div.method-source-code pre { color: #ffdead; overflow: hidden; }
     add_date res
 
     specs = Gem::Specification.sort_by(&:sort_obj).map do |spec|
-      platform = spec.original_platform || Gem::Platform::RUBY
+      platform = spec.platform || Gem::Platform::RUBY
       [spec.name, spec.version, platform]
     end
 

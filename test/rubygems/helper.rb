@@ -961,7 +961,7 @@ Also, a list:
       s.files = %w[lib/code.rb]
       s.require_paths = %w[lib]
       s.platform = Gem::Platform.new 'i386-linux'
-      s.instance_variable_set :@original_platform, 'i386-linux'
+      s.instance_variable_set :@platform, 'i386-linux'
     end
 
     if prerelease
