@@ -463,8 +463,8 @@ class Gem::TestCase < Test::Unit::TestCase
       Gem.instance_variable_set :@default_dir, nil
     end
 
-    Gem::Specification._clear_load_cache
     Gem::Specification.unresolved_deps.clear
+    Gem::Specification.reset
     Gem::refresh
 
     @orig_hooks.each do |name, hooks|
