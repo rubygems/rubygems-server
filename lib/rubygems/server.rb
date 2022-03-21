@@ -488,10 +488,9 @@ div.method-source-code pre { color: #ffdead; overflow: hidden; }
 
     latest_specs = Gem::Specification.latest_specs
 
-    specs = latest_specs.sort.map do |spec|
-      platform = spec.original_platform || Gem::Platform::RUBY
-      [spec.name, spec.version, platform]
-    end
+    specs = latest_specs.map do |spec|
+      [spec.name, spec.version, spec.platform]
+    end.sort
 
     specs = Marshal.dump specs
 
