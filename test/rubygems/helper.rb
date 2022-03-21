@@ -284,6 +284,13 @@ class Gem::TestCase < Test::Unit::TestCase
     }, msg
   end
 
+  def assert_contains_specs(expected, specs)
+    expected = expected.sort
+    keys = expected.map {|item| item[0]}.uniq
+    specs = specs.select {|item| keys.include?(item[0])}.sort
+    assert_equal expected, specs
+  end
+
   include Gem::DefaultUserInteraction
 
   ##
