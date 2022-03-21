@@ -463,7 +463,7 @@ class Gem::TestCase < Test::Unit::TestCase
       Gem.instance_variable_set :@default_dir, nil
     end
 
-    Gem::Specification.send(:clear_load_cache)
+    Gem::Specification.reset
     Gem::Specification.unresolved_deps.clear
     Gem::refresh
 
