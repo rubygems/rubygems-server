@@ -452,6 +452,7 @@ class Gem::TestCase < Test::Unit::TestCase
     Dir.chdir @current_dir
 
     FileUtils.rm_rf @tempdir
+    FileUtils.rm_rf @tmp
 
     ENV.replace(@orig_env)
 
