@@ -284,6 +284,13 @@ class Gem::TestCase < Test::Unit::TestCase
     }, msg
   end
 
+  def assert_contains_specs(expected, specs)
+    expected = expected.sort
+    keys = expected.map {|item| item[0]}.uniq
+    specs = specs.select {|item| keys.include?(item[0])}.sort
+    assert_equal expected, specs
+  end
+
   include Gem::DefaultUserInteraction
 
   ##
@@ -463,8 +470,8 @@ class Gem::TestCase < Test::Unit::TestCase
       Gem.instance_variable_set :@default_dir, nil
     end
 
-    Gem::Specification._clear_load_cache
     Gem::Specification.unresolved_deps.clear
+    Gem::Specification.reset
     Gem::refresh
 
     @orig_hooks.each do |name, hooks|

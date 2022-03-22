@@ -87,7 +87,7 @@ class TestGemServer < Gem::TestCase
     assert_equal 200, @res.status, @res.body
     assert_match %r{ \d\d:\d\d:\d\d }, @res['date']
     assert_equal 'application/octet-stream', @res['content-type']
-    assert_equal [['a', Gem::Version.new(2), Gem::Platform::RUBY]],
+    assert_contains_specs [['a', Gem::Version.new(2), Gem::Platform::RUBY]],
     Marshal.load(@res.body)
   end
 
@@ -112,7 +112,7 @@ class TestGemServer < Gem::TestCase
 
     assert_equal 200, @res.status
 
-    assert_equal [['z', v(9), Gem::Platform::RUBY]], Marshal.load(@res.body)
+    assert_contains_specs [['z', v(9), Gem::Platform::RUBY]], Marshal.load(@res.body)
   end
 
   def test_latest_specs_gz
@@ -126,7 +126,7 @@ class TestGemServer < Gem::TestCase
     assert_equal 200, @res.status, @res.body
     assert_match %r{ \d\d:\d\d:\d\d }, @res['date']
     assert_equal 'application/x-gzip', @res['content-type']
-    assert_equal [['a', Gem::Version.new(2), Gem::Platform::RUBY]],
+    assert_contains_specs [['a', Gem::Version.new(2), Gem::Platform::RUBY]],
                  Marshal.load(Gem::Util.gunzip(@res.body))
   end
 
@@ -161,7 +161,7 @@ class TestGemServer < Gem::TestCase
     assert_equal 200, @res.status, @res.body
     assert_match %r{ \d\d:\d\d:\d\d }, @res['date']
     assert_equal 'application/octet-stream', @res['content-type']
-    assert_equal [['a', v('3.a'), Gem::Platform::RUBY]],
+    assert_contains_specs [['a', v('3.a'), Gem::Platform::RUBY]],
                  Marshal.load(@res.body)
   end
 
@@ -176,7 +176,7 @@ class TestGemServer < Gem::TestCase
     assert_equal 200, @res.status, @res.body
     assert_match %r{ \d\d:\d\d:\d\d }, @res['date']
     assert_equal 'application/x-gzip', @res['content-type']
-    assert_equal [['a', v('3.a'), Gem::Platform::RUBY]],
+    assert_contains_specs [['a', v('3.a'), Gem::Platform::RUBY]],
                  Marshal.load(Gem::Util.gunzip(@res.body))
   end
 
@@ -529,7 +529,7 @@ class TestGemServer < Gem::TestCase
     assert_match %r{ \d\d:\d\d:\d\d }, @res['date']
     assert_equal 'application/octet-stream', @res['content-type']
 
-    assert_equal [['a', Gem::Version.new(1), Gem::Platform::RUBY],
+    assert_contains_specs [['a', Gem::Version.new(1), Gem::Platform::RUBY],
                   ['a', Gem::Version.new(2), Gem::Platform::RUBY],
                   ['a', v('3.a'), Gem::Platform::RUBY]],
                  Marshal.load(@res.body)
@@ -556,7 +556,7 @@ class TestGemServer < Gem::TestCase
 
     assert_equal 200, @res.status
 
-    assert_equal [['z', v(9), Gem::Platform::RUBY]], Marshal.load(@res.body)
+    assert_contains_specs [['z', v(9), Gem::Platform::RUBY]], Marshal.load(@res.body)
   end
 
   def test_specs_gz
@@ -569,7 +569,7 @@ class TestGemServer < Gem::TestCase
     assert_match %r{ \d\d:\d\d:\d\d }, @res['date']
     assert_equal 'application/x-gzip', @res['content-type']
 
-    assert_equal [['a', Gem::Version.new(1), Gem::Platform::RUBY],
+    assert_contains_specs [['a', Gem::Version.new(1), Gem::Platform::RUBY],
                   ['a', Gem::Version.new(2), Gem::Platform::RUBY],
                   ['a', v('3.a'), Gem::Platform::RUBY]],
                  Marshal.load(Gem::Util.gunzip(@res.body))
