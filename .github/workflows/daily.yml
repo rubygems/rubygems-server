@@ -1,0 +1,33 @@
+name: Daily RubyGems HEAD build
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: "12 0 * * *" # daily noon UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby:
+          - head
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+    - uses: actions/checkout@v2
+      with:
+        repository: rubygems/rubygems
+        path: rubygems
+    - name: Install RubyGems HEAD
+      run: cd rubygems && ruby setup.rb && cd ..
+    - name: Check RubyGems version
+      run: gem -v
+    - name: Run the default task
+      run: bundle exec rake
