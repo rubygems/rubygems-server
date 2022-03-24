@@ -3,7 +3,7 @@ name: Daily RubyGems HEAD build
 on:
   workflow_dispatch:
   schedule:
-  - cron: "12 0 * * *" # daily noon UTC
+  - cron: "0 12 * * *" # daily noon UTC
 
 jobs:
   build:
