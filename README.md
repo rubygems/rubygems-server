@@ -1,6 +1,6 @@
-# Gem::Server
+# rubygems-server
 
-Gem::Server and allows users to serve gems for consumption by `gem --remote-install`.
+rubygems-server allows users to serve gems for consumption by `gem --remote-install`. 
 
 gem_server starts an HTTP server on the given port and serves the following:
 
@@ -11,6 +11,8 @@ gem_server starts an HTTP server on the given port and serves the following:
 * "/quick/" - Individual gemspecs
 * "/gems" - Direct access to download the installable gems
 * "/rdoc?q=" - Search for installed rdoc documentation
+
+This gem is a replacement for the `gem server` command that was removed in RubyGems 3.3.0. And This gem is for development purposes only. It is not intended to be used in production. If you hope to use it in production, you should consider using [gemstash](https://github.com/rubygems/gemstash/)
 
 ## Installation
 
